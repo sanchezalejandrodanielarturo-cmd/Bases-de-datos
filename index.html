@@ -5,166 +5,363 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog sobre Bases de Datos</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-            background-color: #f9f9f9;
-            color: #333;
+        /* Paleta de colores azul oscuro */
+        :root {
+            --azul-oscuro-1: #0d1b2a;
+            --azul-oscuro-2: #1b263b;
+            --azul-oscuro-3: #415a77;
+            --azul-oscuro-4: #778da9;
+            --azul-claro-1: #e0e1dd;
+            --azul-claro-2: #f0f4f8;
         }
-        header, footer {
-            background-color: #004d99;
-            color: white;
-            padding: 15px 20px;
+
+        /* Reset y tipografía */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--azul-claro-2);
+            color: var(--azul-oscuro-1);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--azul-oscuro-3);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: var(--azul-oscuro-1);
+        }
+
+        /* Contenedor general */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px 50px;
+        }
+
+        /* Header con flex y sombra */
+        header {
+            background-color: var(--azul-oscuro-1);
+            color: var(--azul-claro-1);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            animation: fadeSlideIn 0.8s ease forwards;
+        }
+
+        /* Sections con fondo y sombra sutil */
+        article {
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 30px 40px;
+            margin-top: 0;
+        }
+
+        section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation-fill-mode: forwards;
+            animation-name: fadeSlideIn;
+            animation-duration: 1s;
+        }
+
+        /* Se hace delay para animación secuencial en cada section */
+        section:nth-of-type(1) { animation-delay: 0.2s; }
+        section:nth-of-type(2) { animation-delay: 0.4s; }
+        section:nth-of-type(3) { animation-delay: 0.6s; }
+        section:nth-of-type(4) { animation-delay: 0.8s; }
+        section:nth-of-type(5) { animation-delay: 1s; }
+        section:nth-of-type(6) { animation-delay: 1.2s; }
+        section:nth-of-type(7) { animation-delay: 1.4s; }
+
+        h2 {
+            color: var(--azul-oscuro-1);
+            border-left: 5px solid var(--azul-oscuro-3);
+            padding-left: 12px;
+            margin-bottom: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.6rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideIn 0.8s ease forwards;
+        }
+        /* Secuencia de animación para h2 (secuencial también) */
+        section:nth-of-type(1) h2 { animation-delay: 0.3s; }
+        section:nth-of-type(2) h2 { animation-delay: 0.5s; }
+        section:nth-of-type(3) h2 { animation-delay: 0.7s; }
+        section:nth-of-type(4) h2 { animation-delay: 0.9s; }
+        section:nth-of-type(5) h2 { animation-delay: 1.1s; }
+        section:nth-of-type(6) h2 { animation-delay: 1.3s; }
+        section:nth-of-type(7) h2 { animation-delay: 1.5s; }
+
+        h3 {
+            color: var(--azul-oscuro-2);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        p, ul {
+            color: var(--azul-oscuro-2);
+            font-size: 1rem;
+        }
+
+        ul {
+            list-style: inside disc;
+            margin-left: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 6px;
+            display: block;
+            margin: 20px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Autores con flex y animación */
+        #autor {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            background-color: var(--azul-oscuro-2);
+            padding: 20px 30px;
+            border-radius: 8px;
+            color: var(--azul-claro-1);
+          box-shadow: inset 0 0 40px rgba(255,255,255,0.1);
+
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: default;
+            transition: box-shadow 0.3s ease;
+            animation-delay: 0.1s;
+            animation-fill-mode: forwards;
+            animation-name: fadeSlideIn;
+            animation-duration: 1s;
+        }
+
+        #autor:hover {
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        #autor img {
+            flex-shrink: 0;
+            width: 140px;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid var(--azul-oscuro-4);
+            background-color: white;
+        }
+
+        #autor div {
+            flex: 1 1 300px;
+        }
+
+        #autor h2 {
+            color: var(--azul-claro-1);
+            border-left: none;
+            margin-top: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+       #autor p {
+    margin: 8px 0;
+    font-size: 1.1rem;
+    color: #ffffff;
+    background: linear-gradient(90deg, #1f4ed8, #2563eb);
+    padding: 8px 14px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+
+        #autor p strong {
+            color: var(--azul-claro-2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: var(--azul-oscuro-1);
+            color: var(--azul-claro-1);
+            font-weight: 500;
+            border-radius: 0 0 8px 8px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+            letter-spacing: 0.15em;
+            animation: fadeSlideIn 1.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .image-center {
             text-align: center;
         }
-        article {
-            background-color: white;
-            padding: 25px;
-            margin-top: 20px;
-            border-radius: 6px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #004d99;
-            margin-top: 40px;
-        }
-        section {
-            margin-bottom: 30px;
-        }
-        img { max-width: none; 
-             }   
-        footer p {
-            font-size: 0.9em;
-        }
-        ul {
-            margin-left: 20px;
-        }
-        h3 {
-            margin-top: 20px;
+
+        /* Animaciones */
+        @keyframes fadeSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Blog - Bases de Datos</h1>
-    </header>
+    <div class="container">
+        <header>
+            Blog - Bases de Datos
+        </header>
 
-    <article>
-       
+        <article>
+           
 
-        <section id="introduccion">
-            <h2>Introducción</h2>
-            <p>Las bases de datos constituyen una pieza fundamental en la gestión y manipulación de información en casi todas las áreas tecnológicas y científicas. Gracias a ellas, grandes volúmenes de datos pueden ser organizados, almacenados y consultados rápidamente, facilitando la toma de decisiones y el desarrollo de aplicaciones diversas. En este artículo exploraremos los conceptos básicos, las arquitecturas implicadas y el papel crucial que desempeña el Sistema de Gestión de Bases de Datos (SGBD).</p>
-            <center><img src="https://thumbs.dreamstime.com/b/ilustraci%C3%B3n-de-vector-concepto-abstracto-base-datos-en-l%C3%ADnea-arquitectura-servicio-almacenamiento-informaci%C3%B3n-computaci%C3%B3n-la-200351988.jpg" alt="Ilustración de base de datos" width="350" height="300"/></center>
-            
-        </section>
+            <section id="introduccion">
+                <h2>Introducción</h2>
+                <p>Las bases de datos constituyen una pieza fundamental en la gestión y manipulación de información en casi todas las áreas tecnológicas y científicas. Gracias a ellas, grandes volúmenes de datos pueden ser organizados, almacenados y consultados rápidamente, facilitando la toma de decisiones y el desarrollo de aplicaciones diversas. En este artículo exploraremos los conceptos básicos, las arquitecturas implicadas y el papel crucial que desempeña el Sistema de Gestión de Bases de Datos (SGBD).</p>
+                <div class="image-center">
+                    <img src="https://thumbs.dreamstime.com/b/ilustraci%C3%B3n-de-vector-concepto-abstracto-base-datos-en-l%C3%ADnea-arquitectura-servicio-almacenamiento-informaci%C3%B3n-computaci%C3%B3n-la-200351988.jpg" alt="Ilustración de base de datos" width="350" height="300"/>
+                </div>
+            </section>
 
-        <section id="conceptos-basicos">
-            <h2>Conceptos Básicos</h2>
-            
-            <p>Una base de datos es una colección organizada de datos relacionados que se almacenan electrónicamente para facilitar su acceso, manipulación y actualización eficiente. El modelo de base de datos relacional es el más común, donde la información se organiza en tablas.</p>
-            
-            <h3>Tablas</h3>
-            <p>Las tablas son el componente fundamental de las bases de datos relacionales. Una tabla es una estructura que organiza los datos en filas y columnas. Cada fila representa un registro único y cada columna representa un atributo o campo específico del dato.</p>
-            
-            <h3>Atributos</h3>
-            <p>Los atributos corresponden a las columnas en una tabla y describen las características específicas de cada dato almacenado. Por ejemplo, en una tabla llamada "Estudiantes", los atributos pueden ser "ID", "Nombre", "Edad" y "Carrera".</p>
-            
-            <h3>Registros (Filas)</h3>
-            <p>Cada registro o fila en una tabla representa una entidad única con valores para cada uno de los atributos. Por ejemplo, un estudiante particular con su ID, nombre, edad y carrera específica.</p>
-            
-            <h3>Relaciones</h3>
-            <p>Las relaciones son conexiones entre tablas basadas en valores comunes, generalmente definidas mediante claves primarias y claves foráneas. Estas relaciones permiten combinar datos de diferentes tablas, manteniendo la integridad y eliminando redundancias.</p>
-
-            <h3>Objetivos de las Bases de Datos</h3>
-            <ul>
-                <li><strong>Almacenamiento eficiente:</strong> Mantener grandes volúmenes de datos sin redundancias innecesarias.</li>
-                <li><strong>Integridad:</strong> Garantizar que los datos sean correctos y consistentes en todo momento.</li>
-                <li><strong>Seguridad:</strong> Proteger la información contra accesos no autorizados.</li>
-                <li><strong>Facilidad de acceso y consulta:</strong> Permitir consultas complejas y rápidas a través de lenguajes especializados como SQL.</li>
-                <li><strong>Manejo de concurrencia:</strong> Permitir que múltiples usuarios accedan y modifiquen los datos al mismo tiempo sin conflictos.</li>
-            </ul>
-
-            <h3>Usos Comunes de las Bases de Datos</h3>
-            <ul>
-                <li>Aplicaciones empresariales para manejo de inventario, ventas, recursos humanos.</li>
-                <li>Sistemas bancarios para registro de transacciones y cuentas.</li>
-                <li>Almacenamiento de información en aplicaciones web y móviles.</li>
-                <li>Sistemas educativos para manejar información de estudiantes y cursos.</li>
-                <li>Big Data e inteligencia artificial, para análisis masivo de datos.</li>
-            </ul>
-            <img src="relaciones.png" alt="Conceptos básicos de bases de datos" width="1000" height="400"/>
-        </section>
-
-        <section id="arquitectura-base-datos">
-            <h2>Arquitectura de una Base de Datos</h2>
-            <p>La arquitectura de una base de datos describe la forma en que los datos están organizados y cómo se accede a ellos. Tradicionalmente se divide en tres niveles:</p>
-            
-            <ul>
-                <li><strong>Nivel Interno (Físico):</strong> Es el nivel más bajo que describe cómo se almacenan físicamente los datos en dispositivos de almacenamiento, como discos duros o SSDs. Incluye estructuras de datos, índices y métodos de acceso.</li>
+            <section id="conceptos-basicos">
+                <h2>Conceptos Básicos</h2>
                 
-                <li><strong>Nivel Conceptual (Lógico):</strong> Este nivel describe qué datos se almacenan, sus relaciones y restricciones. No depende de cómo están físicamente almacenados y proporciona una vista global de la base de datos para todos los usuarios.</li>
+                <p>Una base de datos es una colección organizada de datos relacionados que se almacenan electrónicamente para facilitar su acceso, manipulación y actualización eficiente. El modelo de base de datos relacional es el más común, donde la información se organiza en tablas.</p>
                 
-                <li><strong>Nivel Externo (Vista del usuario):</strong> Este nivel describe cómo un usuario o un grupo de usuarios ve los datos. Puede haber diferentes vistas según los requerimientos específicos, simplificando o restringiendo el acceso a ciertos datos.</li>
-            </ul>
-
-            <p>Esta arquitectura en capas ayuda a separar las preocupaciones entre almacenamiento físico y la forma lógica que el usuario percibe, facilitando la gestión, seguridad y evolución del sistema.</p>
-            <img src="vista.jpeg" alt="Arquitectura de base de datos" width="1000" height="500"/>
-        </section>
-
-        <section id="arquitectura-sgbd">
-            <h2>Arquitectura del SGBD</h2>
-            <p>El Sistema de Gestión de Bases de Datos (SGBD) es un software que facilita el almacenamiento, manipulación y recuperación de los datos, proporcionando una interfaz eficiente y segura. Su arquitectura suele tener tres componentes principales:</p>
-
-            <ul>
-                <li><strong>Gestor de almacenamiento:</strong> Controla el acceso físico a los datos, organiza cómo se almacenan y maneja la ubicación en dispositivos de memoria.</li>
+                <h3>Tablas</h3>
+                <p>Las tablas son el componente fundamental de las bases de datos relacionales. Una tabla es una estructura que organiza los datos en filas y columnas. Cada fila representa un registro único y cada columna representa un atributo o campo específico del dato.</p>
                 
-                <li><strong>Procesador de consultas:</strong> Se encarga de interpretar las instrucciones del usuario en lenguajes como SQL, optimizar y ejecutar las consultas para obtener los datos solicitados.</li>
+                <h3>Atributos</h3>
+                <p>Los atributos corresponden a las columnas en una tabla y describen las características específicas de cada dato almacenado. Por ejemplo, en una tabla llamada "Estudiantes", los atributos pueden ser "ID", "Nombre", "Edad" y "Carrera".</p>
                 
-                <li><strong>Catálogo o diccionario de datos:</strong> Contiene la metadata o información sobre la estructura de la base de datos, como tablas, columnas, tipos de datos y restricciones, ayudando a controlar la integridad y seguridad.</li>
-            </ul>
+                <h3>Registros (Filas)</h3>
+                <p>Cada registro o fila en una tabla representa una entidad única con valores para cada uno de los atributos. Por ejemplo, un estudiante particular con su ID, nombre, edad y carrera específica.</p>
+                
+                <h3>Relaciones</h3>
+                <p>Las relaciones son conexiones entre tablas basadas en valores comunes, generalmente definidas mediante claves primarias y claves foráneas. Estas relaciones permiten combinar datos de diferentes tablas, manteniendo la integridad y eliminando redundancias.</p>
 
-            <p>Además, los SGBD están diseñados para manejar concurrencia, recuperación ante fallos, asegurar la integridad y permitir la administración de usuarios y permisos.</p>
-            <img src="arquitectura_del_sistema.jpg" alt="Arquitectura del SGBD" width="900" height="1100"/>
-        </section>
+                <h3>Objetivos de las Bases de Datos</h3>
+                <ul>
+                    <li><strong>Almacenamiento eficiente:</strong> Mantener grandes volúmenes de datos sin redundancias innecesarias.</li>
+                    <li><strong>Integridad:</strong> Garantizar que los datos sean correctos y consistentes en todo momento.</li>
+                    <li><strong>Seguridad:</strong> Proteger la información contra accesos no autorizados.</li>
+                    <li><strong>Facilidad de acceso y consulta:</strong> Permitir consultas complejas y rápidas a través de lenguajes especializados como SQL.</li>
+                    <li><strong>Manejo de concurrencia:</strong> Permitir que múltiples usuarios accedan y modifiquen los datos al mismo tiempo sin conflictos.</li>
+                </ul>
 
-        <section id="conclusion">
-            <h2>Conclusión</h2>
-            <p>En resumen, las bases de datos y sus sistemas gestores son fundamentales para el manejo moderno de la información. La comprensión de sus conceptos básicos y arquitecturas permite diseñar soluciones eficientes, seguras y confiables adaptadas a las necesidades actuales de diferentes sectores. Con el crecimiento exponencial de los datos, el papel de las bases de datos seguirá siendo crucial en la transformación digital.</p>
-        </section>
-        
+                <h3>Usos Comunes de las Bases de Datos</h3>
+                <ul>
+                    <li>Aplicaciones empresariales para manejo de inventario, ventas, recursos humanos.</li>
+                    <li>Sistemas bancarios para registro de transacciones y cuentas.</li>
+                    <li>Almacenamiento de información en aplicaciones web y móviles.</li>
+                    <li>Sistemas educativos para manejar información de estudiantes y cursos.</li>
+                    <li>Big Data e inteligencia artificial, para análisis masivo de datos.</li>
+                </ul>
+                <img src="relaciones.png" alt="Conceptos básicos de bases de datos" />
+            </section>
 
-        <section id="referencias">
-            <h2>Referencias</h2>
-            <ul>
-                <li>Coronel, C., & Morris, S. (2016). <i>Database Systems: Design, Implementation, & Management</i> (12th ed.). Cengage Learning.</li>
-                <li>Elmasri, R., & Navathe, S. B. (2015). <i>Fundamentals of Database Systems</i> (7th ed.). Pearson.</li>
-            </ul>
-            <p><strong>References in English (APA):</strong></p>
-            <ul>
-                <li>Rob, P., & Coronel, C. (2007). <i>Database systems: Design, implementation, and management</i> (8th ed.). Thomson Course Technology.</li>
-                <li>Elmasri, R., & Navathe, S. B. (2010). <i>Fundamentals of database systems</i> (6th ed.). Addison-Wesley.</li>
-            </ul>
-        </section>
-        <section id="autor" style="display: flex; align-items: center; gap: 20px;">
-            <div style="flex-shrink: 0;">
-            <br><br><br><img src="Logo.jpeg" alt="Logo Tecnológico de Villahermosa" width="200" />
-            </div>
-            <div>
-            <h2>Autores</h2>
-            <p>Daniel Arturo Sanchez Alejandro - daniel2006.tec@gmail.com</p>
-            <p>Mauricio Avalos Rodriguez - mauriciorodriguet@gmail.com</p>
-            <p>Victor Emiliano Garduza Alvarez - victor.garduza66@gmail.com</p>
-            <p>Jesus Alejandro Almeida Sanchez - almeida234@gmail.com</p>
-            <p>Héctor Manuel Bocanegra García - H3cto0rma@gmail.com</p>
-            <p><strong>Institución Educativa:</strong> Tecnológico Nacional de México - Instituto Tecnológico de Villahermosa</p>
-            </div>
-        </section>
-    </article>
+            <section id="arquitectura-base-datos">
+                <h2>Arquitectura de una Base de Datos</h2>
+                <p>La arquitectura de una base de datos describe la forma en que los datos están organizados y cómo se accede a ellos. Tradicionalmente se divide en tres niveles:</p>
+                
+                <ul>
+                    <li><strong>Nivel Interno (Físico):</strong> Es el nivel más bajo que describe cómo se almacenan físicamente los datos en dispositivos de almacenamiento, como discos duros o SSDs. Incluye estructuras de datos, índices y métodos de acceso.</li>
+                    
+                    <li><strong>Nivel Conceptual (Lógico):</strong> Este nivel describe qué datos se almacenan, sus relaciones y restricciones. No depende de cómo están físicamente almacenados y proporciona una vista global de la base de datos para todos los usuarios.</li>
+                    
+                    <li><strong>Nivel Externo (Vista del usuario):</strong> Este nivel describe cómo un usuario o un grupo de usuarios ve los datos. Puede haber diferentes vistas según los requerimientos específicos, simplificando o restringiendo el acceso a ciertos datos.</li>
+                </ul>
 
-    <footer>
-        <p>© 2024 Blog sobre Bases de Datos</p>
-    </footer>
+                <p>Esta arquitectura en capas ayuda a separar las preocupaciones entre almacenamiento físico y la forma lógica que el usuario percibe, facilitando la gestión, seguridad y evolución del sistema.</p>
+                <img src="vista.jpeg" alt="Arquitectura de base de datos" />
+            </section>
+
+            <section id="arquitectura-sgbd">
+                <h2>Arquitectura del SGBD</h2>
+                <p>El Sistema de Gestión de Bases de Datos (SGBD) es un software que facilita el almacenamiento, manipulación y recuperación de los datos, proporcionando una interfaz eficiente y segura. Su arquitectura suele tener tres componentes principales:</p>
+
+                <ul>
+                    <li><strong>Gestor de almacenamiento:</strong> Controla el acceso físico a los datos, organiza cómo se almacenan y maneja la ubicación en dispositivos de memoria.</li>
+                    
+                    <li><strong>Procesador de consultas:</strong> Se encarga de interpretar las instrucciones del usuario en lenguajes como SQL, optimizar y ejecutar las consultas para obtener los datos solicitados.</li>
+                    
+                    <li><strong>Catálogo o diccionario de datos:</strong> Contiene la metadata o información sobre la estructura de la base de datos, como tablas, columnas, tipos de datos y restricciones, ayudando a controlar la integridad y seguridad.</li>
+                </ul>
+
+                <p>Además, los SGBD están diseñados para manejar concurrencia, recuperación ante fallos, asegurar la integridad y permitir la administración de usuarios y permisos.</p>
+                <img src="arquitectura_del_sistema.jpg" alt="Arquitectura del SGBD" />
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusión</h2>
+                <p>En resumen, las bases de datos y sus sistemas gestores son fundamentales para el manejo moderno de la información. La comprensión de sus conceptos básicos y arquitecturas permite diseñar soluciones eficientes, seguras y confiables adaptadas a las necesidades actuales de diferentes sectores. Con el crecimiento exponencial de los datos, el papel de las bases de datos seguirá siendo crucial en la transformación digital.</p>
+            </section>
+
+            <section id="referencias">
+                <h2>Referencias</h2>
+                <ul>
+                    <li>Coronel, C., & Morris, S. (2016). <i>Database Systems: Design, Implementation, & Management</i> (12th ed.). Cengage Learning.</li>
+                    <li>Elmasri, R., & Navathe, S. B. (2015). <i>Fundamentals of Database Systems</i> (7th ed.). Pearson.</li>
+                </ul>
+                <p><strong>References in English (APA):</strong></p>
+                <ul>
+                    <li>Rob, P., & Coronel, C. (2007). <i>Database systems: Design, implementation, and management</i> (8th ed.). Thomson Course Technology.</li>
+                    <li>Elmasri, R., & Navathe, S. B. (2010). <i>Fundamentals of database systems</i> (6th ed.). Addison-Wesley.</li>
+                </ul>
+            </section>
+
+             <section id="autor">
+                <img src="Logo.jpeg" alt="Logo Tecnológico de Villahermosa" />
+                <div>
+                    <h2>Autores</h2>
+                    <p>Daniel Arturo Sanchez Alejandro - daniel2006.tec@gmail.com</p>
+                    <p>Mauricio Avalos Rodriguez - mauriciorodriguet@gmail.com</p>
+                    <p>Victor Emiliano Garduza Alvarez - victor.garduza66@gmail.com</p>
+                    <p>Jesus Alejandro Almeida Sanchez - jesusalejandro936sanchez@gmail.com</p>
+                    <p>Héctor Manuel Bocanegra García - hectormanuel.bocanegra@gmail.com</p>
+                    <p><strong>Institución Educativa:</strong> Tecnológico Nacional de México - Instituto Tecnológico de Villahermosa</p>
+                </div>
+            </section>
+
+        </article>
+
+        <footer>
+            © 2026 Blog sobre Bases de Datos
+        </footer>
+    </div>
 </body>
 </html>
